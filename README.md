@@ -7,6 +7,8 @@ The flashing lights will blink until the message is acknowledged.
 
 See PiNotify Design.py for more details about the project design.
 
+This is not an official Google product.
+
 # Setup
 
 The project consists of 3 apps that work in concert: a backend and web UI that runs on Google

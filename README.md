@@ -39,14 +39,11 @@ Setup steps:
    https://cloud.google.com/endpoints/docs/frameworks/legacy/v1/python/getstarted/backend/setup to
    setup Google Cloud Endpoints. 
 1. In `app/src/main/java/com/pinotify/BackendService.java`, enter the Cloud Endpoints audience.
-1. Also in `app/src/main/java/com/pinotify/BackendService.java`, enter the URL of the backend
-   service. This can either be your local development server on the same WiFi, or your deployed
-   backend URL.
-1. In `app/src/main/java/com/pinotify/RPiBluetoothConnection.java`, hard-code the Bluetooth address
-   of your Raspberry Pi. 
 1. In `appengine/api.py`, enter the Android and web client IDs from your project's Cloud Console
    credentials section.
 1. Follow the instructions on
    https://cloud.google.com/endpoints/docs/frameworks/legacy/v1/java/generate-client-libraries-android
    to create a client library for Android. Place it in a lib/ subdirectory of
    app/.
+1. When you launch the Android app, you'll need to enter the backend service URL. This can either be
+   your local development server on the same WiFi, or your deployed backend URL.

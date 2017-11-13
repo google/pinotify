@@ -2,4 +2,12 @@ bin/
 gen/
 obj/
 libs/*/*.so
-
+.idea
+.gradle/
+app/app.iml
+app/build/
+appengine/.gradle/
+appengine/.login.html.swp
+build/
+local.properties
+squirrelgame2.pinotify.iml

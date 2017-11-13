@@ -12,31 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-runtime: python27
-api_version: 1
-threadsafe: true
+[Unit]
+Description=PiNotify Service
+After=bluetooth.target
 
-handlers:
-- url: /favicon\.ico
-  static_files: favicon.ico
-  upload: favicon\.ico
+[Service]
+Type=idle
+ExecStart=/bin/bash /home/pi/PiNotify/runner.sh 
 
-- url: /bootstrap
-  static_dir: ../third_party/bootstrap
-
-- url: /_ah/api/.*
-  script: api.api
-
-- url: /.*
-  script: web_handlers.app
-
-
-libraries:
-- name: webapp2
-  version: latest
-- name: jinja2
-  version: latest
-- name: pycrypto
-  version: 2.6
-- name: ssl
-  version: 2.7.11
+[Install]
+WantedBy=multi-user.target

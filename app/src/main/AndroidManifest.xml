@@ -24,15 +24,27 @@ limitations under the License.
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MessageActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
+            android:theme="@style/AppThemeNoActionBar"
             android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity android:name=".activities.BluetoothSelectActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".activities.ConfigActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,20 +52,20 @@ limitations under the License.
             </intent-filter>
         </activity>
 
-        <service android:name=".FirebasePushNotificationHandler">
+        <service android:name=".services.FirebasePushNotificationHandler">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".MyFirebaseInstanceIDService">
+        <service android:name=".services.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
         <receiver
-            android:name=".SampleBootReceiver"
+            android:name=".receivers.MyBootReceiver"
             android:enabled="true"> <!-- TODO: disable and programmatically enable -->
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
@@ -61,7 +73,7 @@ limitations under the License.
         </receiver>
 
         <receiver
-            android:name=".HealthChecker"
+            android:name=".receivers.HealthChecker"
             android:enabled="true">
             <intent-filter>
                 <action android:name="com.pinotify.HealthCheck"></action>

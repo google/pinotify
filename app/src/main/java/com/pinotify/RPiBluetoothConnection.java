@@ -14,14 +14,14 @@
 
 package com.pinotify;
 
-import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.pinotify.activities.ConfigActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,48 +32,36 @@ import java.util.UUID;
 public class RPiBluetoothConnection {
     private static final int NUM_RETRIES = 3;
     private static BluetoothSocket btSocket;
-    // TODO: make UI to get btAddress from paired devices.
-    // SETUP_TODO: Hard code the Bluetooth address of your Raspberry Pi.
-    private static String btAdress = "enter-valid-device-address";
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static OutputStream out;
     private static BluetoothDevice device;
-    private static StringBuilder statusMsg = new StringBuilder();
     private static RPiBluetoothListener listener = new RPiBluetoothListener();
 
     private static void discoverDevice(Context context) {
         BluetoothSocket sock;
         if (btSocket == null) {
             BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-            device = btAdapter.getRemoteDevice(btAdress);
-            statusMsg.append("\nRemote device: " + device.getName());
+            String btAddress = getSharedPrefs(context).getString(ConfigActivity
+                    .PREF_BLUETOOTH_ADDRESS, null);
+            device = btAdapter.getRemoteDevice(btAddress);
             try {
                 sock = device.createRfcommSocketToServiceRecord(MY_UUID);
             } catch (Exception e) {
-                Toast.makeText(context, "Couldn't create socket", Toast.LENGTH_LONG);
-                statusMsg.append("Failed to connect");
+                e.printStackTrace();
                 return;
             }
-            statusMsg.append("\n createRfcommsockettoservice! ");
             btAdapter.cancelDiscovery();
             try {
                 sock.connect();
-                statusMsg.append("\n btSocket Created!");
             } catch (IOException e) {
-                Toast.makeText(context, "Could not connect to socket", Toast.LENGTH_LONG);
+                e.printStackTrace();
                 try {
                     sock.close();
-                } catch (Exception b) {}
+                } catch (Exception b) {
+                }
             }
             btSocket = sock;
         }
-    }
-
-    @NonNull
-    public static String sendMessageGetStatus(Context context, String sendTxt) {
-        statusMsg = new StringBuilder();
-        sendMessage(context, sendTxt.getBytes()[0]);
-        return statusMsg.toString();
     }
 
     public static interface Receiver {
@@ -97,11 +85,10 @@ public class RPiBluetoothConnection {
             try {
                 out = btSocket.getOutputStream();
                 out.write(msg);
-                Toast.makeText(context, "Message sent", Toast.LENGTH_LONG).show();
                 listener.start(btSocket);
                 break;
             } catch (Exception a) {
-                Toast.makeText(context, "Could not send msg", Toast.LENGTH_LONG).show();
+                a.printStackTrace();
                 try {
                     btSocket.close();
                 } catch (IOException e) {
@@ -115,6 +102,10 @@ public class RPiBluetoothConnection {
             }
         }
 
+    }
+
+    private static SharedPreferences getSharedPrefs(Context context) {
+        return context.getSharedPreferences(ConfigActivity.PINOTIFY_PREFS, 0);
     }
 }
 

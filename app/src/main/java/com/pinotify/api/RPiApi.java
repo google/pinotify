@@ -12,11 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.pinotify;
+package com.pinotify.api;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
-public class RPiService {
+import com.pinotify.RPiBluetoothConnection;
+import com.pinotify.activities.ConfigActivity;
+
+public class RPiApi {
     // These values can range 0 - 15. Both values cannot be zero.
     private static final byte TIME_ON_SEC = 2;
     private static final byte TIME_OFF_SEC = 2;
@@ -39,6 +43,11 @@ public class RPiService {
     }
 
     public static void startBlinking(Context context) {
+        SharedPreferences sharedPrefs = context.getSharedPreferences(ConfigActivity
+                .PINOTIFY_PREFS, 0);
+        if (!sharedPrefs.getBoolean(ConfigActivity.PREF_STARTED, false)) {
+            return;
+        }
         RPiBluetoothConnection.sendMessage(context, BLINK_MESSAGE);
     }
 }

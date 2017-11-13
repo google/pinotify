@@ -12,21 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.pinotify;
+package com.pinotify.receivers;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
-
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
-    private static final String TAG = "MyFirebaseIIDService";
+/**
+ * Class that sets up timers on system boot.
+ */
+public class MyBootReceiver extends BroadcastReceiver {
 
     @Override
-    public void onTokenRefresh() {
-        // Get updated InstanceID token.
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "Refreshed token: " + refreshedToken);
-        StateController.setFcmId(this, refreshedToken);
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+            Log.i("BootRecv", "Booted!");
+            // TODO: server RPC and bluetooth update here; or maybe those get pushed into alarm
+            // with initial start at now?.
+            HealthChecker.startAlarm(context);
+        }
     }
 }

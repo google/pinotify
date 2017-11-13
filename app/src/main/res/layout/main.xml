@@ -35,37 +35,5 @@ limitations under the License.
 		android:textStyle="bold"
 		android:visibility="visible"
 		tools:text="Message Container" />
-
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:orientation="horizontal">
-
-		<EditText
-			android:id="@+id/sendtext"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:ems="10"
-			android:text="Type text to send to Pi here" />
-
-		<Button
-			android:id="@+id/sendbutton"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:text="Send"/>
-		<Button
-			android:id="@+id/cancelbutton"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:text="Cancel"/>
-
-	</LinearLayout>
-
-	<TextView
-		android:id="@+id/header"
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:text="Output: "/>
-
 </LinearLayout>
 

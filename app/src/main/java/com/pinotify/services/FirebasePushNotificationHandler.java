@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.pinotify;
+package com.pinotify.services;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.Handler;
-import android.os.IBinder;
+
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.pinotify.api.BackendApi;
 
 public class FirebasePushNotificationHandler extends FirebaseMessagingService {
     private static final String TAG = "FirebasePushNotifica";
@@ -39,16 +37,6 @@ public class FirebasePushNotificationHandler extends FirebaseMessagingService {
         }
 
         // TODO: id cause
-        BackendService.makeDeviceRequest(this, null);
-
-//        Handler h = new Handler(getApplicationContext().getMainLooper());
-//
-//        h.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                RPiBluetoothConnection.sendMessage(getApplicationContext(),
-//                        "Got a push notification!");
-//            }
-//        });
+        BackendApi.makeDeviceRequest(this, null);
     }
 }

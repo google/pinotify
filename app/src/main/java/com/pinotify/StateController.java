@@ -19,6 +19,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 
+import com.pinotify.activities.MessageActivity;
+import com.pinotify.api.BackendApi;
+import com.pinotify.api.RPiApi;
+
 /**
  * Manages message persistent state held locally.
  */
@@ -45,7 +49,7 @@ public class StateController {
         SharedPreferences.Editor editor = getEditor(context);
         editor.putString(FCM_ID, fcmId);
         editor.commit();
-        BackendService.makeDeviceRequest(context, null);
+        BackendApi.makeDeviceRequest(context, null);
     }
 
     public static String getFcmId(Context context) {
@@ -61,7 +65,7 @@ public class StateController {
         SharedPreferences.Editor editor = getEditor(context);
         editor.putLong(ACKED_UNTIL_UTC, message.timeSentUtc);
         editor.commit();
-        BackendService.makeDeviceRequest(context, null);
+        BackendApi.makeDeviceRequest(context, null);
 
         // Clear the currently displayed message.
         setActiveMessage(context, null);
@@ -73,9 +77,9 @@ public class StateController {
     }
 
     public static class ActiveMessage {
-        String sender;
-        String message;
-        long timeSentUtc;
+        public String sender;
+        public String message;
+        public long timeSentUtc;
 
         @Override
         public boolean equals(Object obj) {
@@ -102,13 +106,13 @@ public class StateController {
             editor.putString(ACTIVE_MESSAGE_SENDER, message.sender);
             editor.putString(ACTIVE_MESSAGE_MESSAGE, message.message);
             editor.putLong(ACTIVE_MESSAGE_TIME_SENT_UTC, message.timeSentUtc);
-            RPiService.setDismisser(context, new RPiService.Dismisser() {
+            RPiApi.setDismisser(context, new RPiApi.Dismisser() {
                 @Override
                 public void Dismiss(Context context) {
                     ackCurrentMessage(context);
                 }
             });
-            RPiService.startBlinking(context);
+            RPiApi.startBlinking(context);
         }
         editor.commit();
 
@@ -116,8 +120,8 @@ public class StateController {
                 (message != null && (!message.equals(old_message)))) {
             // If the message changed, update the message display activity. This method is
             // synchronized to prevent races in this conditional.
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.putExtra(MainActivity.EXTRA_MESSAGE, true);
+            Intent intent = new Intent(context, MessageActivity.class);
+            intent.putExtra(MessageActivity.EXTRA_MESSAGE, true);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }

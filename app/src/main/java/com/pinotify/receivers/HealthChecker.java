@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.pinotify;
+package com.pinotify.receivers;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -22,8 +22,10 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.widget.Toast;
 
+import com.pinotify.api.BackendApi;
+
 /**
- * Manages the a
+ * Manages the alarm health checker.
  */
 public class HealthChecker extends BroadcastReceiver{
     /**
@@ -75,7 +77,6 @@ public class HealthChecker extends BroadcastReceiver{
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "The alarm went off!", Toast.LENGTH_SHORT).show();
-        BackendService.makeDeviceRequest(context, null);
+        BackendApi.makeDeviceRequest(context, null);
     }
 }

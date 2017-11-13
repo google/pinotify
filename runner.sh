@@ -13,6 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+# Change to the directory of this script.
+cd "$(dirname $(readlink -f "$0"))"
 while true
 do
 sudo ./bt_server.py

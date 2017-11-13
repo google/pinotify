@@ -22,7 +22,7 @@ repositories {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.pinotify"
@@ -41,6 +41,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:+'
     compile 'com.google.firebase:firebase-messaging:10.2.6'
     compile files('lib/pinotify_api-v1-1.22.0-SNAPSHOT.jar')
     compile 'com.google.android.gms:play-services-base:10.2.6'

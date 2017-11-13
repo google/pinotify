@@ -14,13 +14,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<resources>
-    <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
-	</style>
-    <style name="AppThemeNoActionBar" parent="@style/Theme.AppCompat.Light">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-</resources>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/bluetoothSelectDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select a Bluetooth device" />
+
+    <ListView
+        android:id="@+id/bluetoothListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

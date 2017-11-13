@@ -41,6 +41,7 @@ Setup steps:
 1. In `app/src/main/java/com/pinotify/BackendService.java`, enter the Cloud Endpoints audience.
 1. In `appengine/api.py`, enter the Android and web client IDs from your project's Cloud Console
    credentials section.
+1. In `appengine/web_handlers.py`, add your Firebase cloud messaging API key.
 1. Follow the instructions on
    https://cloud.google.com/endpoints/docs/frameworks/legacy/v1/java/generate-client-libraries-android
    to create a client library for Android. Place it in a lib/ subdirectory of
